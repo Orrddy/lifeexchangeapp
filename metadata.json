@@ -1,0 +1,6 @@
+{
+  "name": "LifeSpan Exchange",
+  "description": "Satirical retro government portal where users can valuation and sell years of their lifespan in exchange for immediate temporal liquidity.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

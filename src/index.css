@@ -1,0 +1,385 @@
+@import url('https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400;1,700&family=Special+Elite&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=EB+Garamond:ital,wght@0,400..800;1,400..800&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-serif: "Libre Baskerville", "EB Garamond", Georgia, serif;
+  --font-mono: "Special Elite", "Courier Prime", "Courier New", monospace;
+  --font-stamp: "Special Elite", cursive;
+
+  /* Custom Vintage Colors mapped to Artistic Flair Theme */
+  --color-parchment: #f4f1e5;
+  --color-parchment-dark: #d6cfbb;
+  --color-office-green: #5a5f45;
+  --color-office-rust: #a3352a;
+  --color-office-brass: #a68e5a;
+  --color-office-beige: #d6cfbb;
+  --color-office-grey: #2d2a26;
+
+  @keyframes crt-flicker {
+    0% { opacity: 0.985; }
+    50% { opacity: 0.995; }
+    100% { opacity: 0.985; }
+  }
+
+  @keyframes text-shadow-pulse {
+    0% { text-shadow: 0 0 2px rgba(90, 95, 69, 0.4); }
+    50% { text-shadow: 0 0 6px rgba(90, 95, 69, 0.8), 0 0 12px rgba(90, 95, 69, 0.3); }
+    100% { text-shadow: 0 0 2px rgba(90, 95, 69, 0.4); }
+  }
+
+  @keyframes stamp-slam {
+    0% {
+      transform: scale(3) rotate(-15deg);
+      opacity: 0;
+      filter: blur(4px);
+    }
+    70% {
+      transform: scale(0.9) rotate(-7deg);
+      opacity: 0.9;
+    }
+    100% {
+      transform: scale(1) rotate(-8deg);
+      opacity: 1;
+      filter: blur(0);
+    }
+  }
+
+  @keyframes subtle-flicker {
+    0% { opacity: 0.97; }
+    25% { opacity: 0.99; }
+    50% { opacity: 0.96; }
+    75% { opacity: 1; }
+    100% { opacity: 0.98; }
+  }
+
+  @keyframes scanline-roll {
+    0% { transform: translateY(-100%); }
+    100% { transform: translateY(100%); }
+  }
+
+  @keyframes shake {
+    0%, 100% { transform: translate(0, 0); }
+    10%, 30%, 50%, 70%, 90% { transform: translate(-2px, -1px); }
+    20%, 40%, 60%, 80% { transform: translate(2px, 2px); }
+  }
+
+  --animate-crt: crt-flicker 0.15s infinite;
+  --animate-flicker: subtle-flicker 0.25s infinite;
+  --animate-stamp: stamp-slam 0.18s cubic-bezier(0.25, 1.5, 0.5, 1) forwards;
+  --animate-shake: shake 0.2s ease-in-out;
+}
+
+/* Custom Base Scrollbar styled vintage */
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: #d6cfbb;
+  border-left: 1px solid #c8c0a8;
+}
+::-webkit-scrollbar-thumb {
+  background: #a68e5a;
+  border: 2px solid #d6cfbb;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #5a5f45;
+}
+
+/* Aged Parchment Paper Background texture matching --paper */
+.bg-aged-paper {
+  background-color: #f4f1e5 !important;
+  background-image: 
+    radial-gradient(circle at 30% 20%, rgba(166, 142, 90, 0.08) 0%, transparent 60%),
+    radial-gradient(circle at 80% 70%, rgba(90, 95, 69, 0.08) 0%, transparent 50%),
+    linear-gradient(rgba(45, 42, 38, 0.015) 1px, transparent 1px) !important;
+  background-size: 100% 100%, 100% 100%, 100% 24px !important;
+  border: 1px solid #c8c0a8 !important;
+  box-shadow: 
+    5px 5px 0px #d6cfbb, 
+    10px 10px 0px #d6cfbb, 
+    15px 15px 30px rgba(0, 0, 0, 0.2), 
+    inset 0 0 30px rgba(166, 142, 90, 0.05) !important;
+  border-radius: 0px !important;
+}
+
+/* Base workspace desk background */
+#desktop-desk {
+  background-color: #d6cfbb !important;
+  background-image: radial-gradient(#a68e5a 1px, transparent 1px) !important;
+  background-size: 24px 24px !important;
+  font-family: 'Special Elite', 'Courier New', Courier, monospace !important;
+}
+
+/* Global typewriter ink theme for containers */
+.bg-aged-paper, .bg-aged-paper * {
+  color: #2d2a26 !important;
+}
+
+/* Accentuate Serif elements with Libre Baskerville */
+h1, .font-serif, h2.font-serif, h1.font-serif, h3.font-serif {
+  font-family: "Libre Baskerville", "EB Garamond", Georgia, serif !important;
+  color: #2d2a26 !important;
+  letter-spacing: 0.02em !important;
+}
+
+/* Double border separator */
+.border-b-2.border-stone-800 {
+  border-bottom: 2px double #2d2a26 !important;
+}
+
+/* Stamped text alignment colors */
+.stamped-red, .text-red-800 {
+  color: #a3352a !important;
+}
+.stamped-green, .text-green-800 {
+  color: #5a5f45 !important;
+}
+
+/* Real-looking paper stamp ink effects */
+.stamped-red {
+  color: #a3352a !important;
+  border: 3px double #a3352a !important;
+  text-shadow: 1px 1px 1px rgba(163, 53, 42, 0.15) !important;
+  background-color: rgba(163, 53, 42, 0.05) !important;
+  transform: rotate(-3deg);
+}
+
+.stamped-green {
+  color: #5a5f45 !important;
+  border: 3px double #5a5f45 !important;
+  text-shadow: 1px 1px 1px rgba(90, 95, 69, 0.15) !important;
+  background-color: rgba(90, 95, 69, 0.05) !important;
+  transform: rotate(2deg);
+}
+
+/* Artistic Flair Action Button Style (mapped from btn-vintage) */
+.btn-vintage, button.btn-vintage {
+  background-color: #a3352a !important; /* --red */
+  color: #ffffff !important;
+  font-family: "Libre Baskerville", serif !important;
+  font-weight: bold !important;
+  text-transform: uppercase !important;
+  letter-spacing: 2px !important;
+  border: none !important;
+  box-shadow: 4px 4px 0px #2d2a26 !important; /* --ink */
+  position: relative !important;
+  transition: all 0.1s ease-in-out !important;
+  border-radius: 0px !important;
+  padding-left: 1.5rem !important;
+  padding-right: 1.5rem !important;
+}
+
+.btn-vintage::after {
+  content: '' !important;
+  position: absolute !important;
+  top: 2px !important;
+  left: 2px !important;
+  right: 2px !important;
+  bottom: 2px !important;
+  border: 1px solid rgba(255, 255, 255, 0.3) !important;
+  pointer-events: none !important;
+}
+
+.btn-vintage:hover {
+  filter: brightness(1.15) !important;
+}
+
+.btn-vintage:active {
+  transform: translate(2px, 2px) !important;
+  box-shadow: 2px 2px 0px #2d2a26 !important;
+}
+
+.btn-vintage:disabled {
+  background-color: #5a5f45 !important; /* --olive */
+  color: rgba(255, 255, 255, 0.5) !important;
+  opacity: 0.6 !important;
+  box-shadow: none !important;
+  transform: none !important;
+  cursor: not-allowed !important;
+}
+
+/* Custom form section container boxes */
+.bg-\[\#f0e4c5\], .bg-\[\#ecdba8\]\/50, .bg-\[\#eedfb9\]\/40 {
+  background-color: rgba(255, 255, 255, 0.3) !important;
+  border: 1px solid rgba(45, 42, 38, 0.15) !important;
+  padding: 15px !important;
+  position: relative !important;
+  border-radius: 0px !important;
+}
+
+/* Input Fields and Select Dropdowns styling */
+input[type="text"], input[type="number"], select, textarea {
+  border: none !important;
+  border-bottom: 1px dashed #2d2a26 !important;
+  background: transparent !important;
+  padding: 5px 0 !important;
+  font-family: 'Special Elite', monospace !important;
+  font-size: 18px !important;
+  color: #2d2a26 !important;
+}
+
+input:focus, select:focus, textarea:focus {
+  outline: none !important;
+  border-bottom-style: solid !important;
+}
+
+/* Slider visual layout from design */
+input[type="range"] {
+  height: 12px !important;
+  background-color: #5a5f45 !important; /* --olive */
+  border: 1px solid #2d2a26 !important;
+  border-radius: 0px !important;
+  appearance: none !important;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  width: 10px !important;
+  height: 26px !important;
+  background: #a68e5a !important; /* --brass */
+  border: 1px solid #2d2a26 !important;
+  box-shadow: 2px 2px 0px rgba(0,0,0,0.2) !important;
+  border-radius: 0px !important;
+  appearance: none !important;
+}
+
+/* Active background states in checklist buttons */
+button.bg-stone-800 {
+  background-color: #2d2a26 !important; /* --ink */
+  color: #f4f1e5 !important;
+}
+
+/* Custom Checkboxes */
+.box, span.font-bold {
+  display: inline-block !important;
+  width: 14px !important;
+  height: 14px !important;
+  border: 1px solid #2d2a26 !important;
+  text-align: center !important;
+  line-height: 14px !important;
+  font-size: 11px !important;
+  border-radius: 0px !important;
+  background: transparent !important;
+}
+
+/* Sticky notes */
+.side-note {
+  position: absolute;
+  top: 180px;
+  left: -20px;
+  background: #fff5ba !important;
+  padding: 12px !important;
+  width: 130px;
+  transform: rotate(-3deg);
+  box-shadow: 3px 3px 6px rgba(0,0,0,0.12) !important;
+  font-size: 11px !important;
+  border-left: 4px solid #f2e061 !important;
+  font-family: "Special Elite", monospace !important;
+  z-index: 10;
+}
+
+/* Ledger paper horizontal ruling lines */
+.ledger-lines {
+  background-image: linear-gradient(rgba(166, 142, 90, 0.18) 1px, transparent 1px);
+  background-size: 100% 28px;
+  line-height: 28px;
+}
+
+/* Paper marginal red double line */
+.ledger-margin {
+  border-left: 2px double rgba(163, 53, 42, 0.25);
+  padding-left: 16px;
+}
+
+/* Coffee stain effect generator */
+.coffee-stain {
+  position: absolute;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(166, 142, 90, 0.15) 0%, rgba(166, 142, 90, 0.08) 40%, transparent 70%);
+  pointer-events: none;
+}
+
+/* CRT Screen overlay */
+.crt-screen {
+  background: #1a221a;
+  position: relative;
+  overflow: hidden;
+  box-shadow: inset 0 0 80px rgba(0, 0, 0, 0.8), 0 10px 40px rgba(0, 0, 0, 0.5);
+  border: 12px solid #2d2a26;
+  border-radius: 12px;
+}
+
+.crt-screen::before {
+  content: " ";
+  display: block;
+  position: absolute;
+  top: 0; left: 0; bottom: 0; right: 0;
+  background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(163, 53, 42, 0.06), rgba(90, 95, 69, 0.02), rgba(45, 42, 38, 0.06));
+  z-index: 50;
+  background-size: 100% 3px, 6px 100%;
+  pointer-events: none;
+}
+
+.crt-screen::after {
+  content: " ";
+  display: block;
+  position: absolute;
+  top: 0; left: 0; bottom: 0; right: 0;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.08) 0%, rgba(0, 0, 0, 0.45) 120%);
+  z-index: 51;
+  pointer-events: none;
+}
+
+.crt-scanline {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 6px;
+  background: rgba(90, 95, 69, 0.12);
+  animation: scanline-roll 6s linear infinite;
+  z-index: 48;
+  pointer-events: none;
+}
+
+/* Unstable Occult System Glitch Animation */
+@keyframes text-occult-glitch {
+  0%, 93%, 98.2%, 100% {
+    color: inherit;
+    text-shadow: none;
+    transform: skew(0deg) scale(1);
+    opacity: 1;
+  }
+  94% {
+    color: #a3352a !important;
+    text-shadow: 2px 2px 0px rgba(163, 53, 42, 0.6), -2px -1.5px 0px rgba(0, 0, 0, 0.5);
+    transform: skew(-4deg) scale(1.02);
+    opacity: 0.95;
+  }
+  95% {
+    color: #7a1e16 !important;
+    text-shadow: -1.5px 1.5px 1px rgba(163, 53, 42, 0.8), 2.5px -1px 0px rgba(45, 42, 38, 0.4);
+    transform: skew(4deg) scale(0.99);
+    opacity: 0.9;
+  }
+  96% {
+    color: inherit;
+    text-shadow: 1px -1px 0px rgba(163, 53, 42, 0.5);
+    transform: skew(-1deg);
+    opacity: 1;
+  }
+  97.5% {
+    color: #a3352a !important;
+    text-shadow: 3px -1px 2px rgba(163, 53, 42, 0.7);
+    transform: skew(2deg) scale(1.01);
+    opacity: 0.95;
+  }
+}
+
+.glitch-text {
+  display: inline-block;
+  animation: text-occult-glitch 4.5s infinite;
+}
+
+
+
+
