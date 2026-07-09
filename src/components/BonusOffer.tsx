@@ -169,7 +169,7 @@ export const BonusOffer: React.FC<BonusOfferProps> = ({
               onClick={handleAcceptBonus}
               className="w-full max-w-sm px-6 py-4 btn-vintage border-2 border-stone-950 text-stone-900 font-black rounded-sm bg-emerald-100"
             >
-              ADD ${bonusValue.toLocaleString()} TO DEED AGREEMENT &rarr;
+              ADD ${bonusValue.toLocaleString()} TO DEED AGREEMENT
             </button>
           ) : (
             <div className="font-mono text-xs text-stone-500 animate-pulse uppercase tracking-wider">

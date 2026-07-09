@@ -197,7 +197,7 @@ export const Valuation: React.FC<ValuationProps> = ({ state, onContinue }) => {
                   }}
                   className="w-full max-w-sm px-6 py-3.5 btn-vintage border-2 border-stone-950 font-black text-center text-sm md:text-base text-stone-900 bg-stone-200"
                 >
-                  Accept Valuation & Proceed &rarr;
+                  Accept Valuation & Proceed
                 </button>
               </div>
             )}

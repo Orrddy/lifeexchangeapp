@@ -262,7 +262,7 @@ export const IdentityVerification: React.FC<IdentityVerificationProps> = ({
               scanDone ? "text-stone-900" : "text-stone-400 opacity-50 cursor-not-allowed"
             }`}
           >
-            CONFIRM CREDENTIAL & CONTINUE &rarr;
+            CONFIRM CREDENTIAL & CONTINUE
           </button>
         </div>
       </div>

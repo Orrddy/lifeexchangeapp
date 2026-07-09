@@ -263,7 +263,7 @@ export const Questionnaire: React.FC<QuestionnaireProps> = ({ state, onChange, o
                   : "bg-stone-300 border-stone-400 text-stone-500 cursor-not-allowed opacity-65"
               }`}
             >
-              {currentStep === totalSteps - 1 ? "VALUATE MORTALITY &rarr;" : "NEXT &rarr;"}
+              {currentStep === totalSteps - 1 ? "VALUATE MORTALITY" : "NEXT"}
             </button>
           </div>
         </div>

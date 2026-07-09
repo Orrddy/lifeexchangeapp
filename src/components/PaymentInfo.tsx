@@ -147,7 +147,7 @@ export const PaymentInfo: React.FC<PaymentInfoProps> = ({ state, onChange, onNex
             type="submit"
             className="px-6 py-3.5 btn-vintage border-2 border-stone-950 text-xs md:text-sm text-stone-900 font-black rounded-sm"
           >
-            RECORD PAYMENT SETTINGS &rarr;
+            RECORD PAYMENT SETTINGS
           </button>
         </div>
       </form>

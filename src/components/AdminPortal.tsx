@@ -118,6 +118,14 @@ export const AdminPortal: React.FC<AdminPortalProps> = ({
       "Intrusive coffee stain detected on primary hardware terminal.",
       "Gas station sushi audit reported digestive anomaly.",
       "Ethereal bandwidth allocation upgraded to 150 TB/s.",
+      "🚨 SEC-3 SCREAM DETECTED: Soul #4092 wailing: 'I gave up 20 years for a limited edition action figure!'",
+      "🔊 CONSOLE LAMENTATION: Mortal in Sector VII weeping over lost Sunday afternoon naps.",
+      "☣️ DESPAIR DETECTOR: High density lamentation spike detected in Software Developer quadrant.",
+      "📢 LAMENT REPORT: 'My youth... my sweet youth, traded away for a leased hybrid hatchback!'",
+      "🔊 SOUL COGNIZANCE: Subject Arthur Dent screaming continuously for 45 minutes in the processing lobby.",
+      "⚠️ NOISE ALERT: Multi-user wailing threshold exceeded in Sector II. Triggering extra-strength espresso mist.",
+      "📢 LAMENTATION IN PROGRESS: 'Why did I click agree?! The button was so vintage!'",
+      "🔊 HARVEST AUDIT: Cry-decibel level elevated by 300%. Sound dampeners recalibrated."
     ];
 
     const interval = setInterval(() => {
@@ -416,7 +424,7 @@ export const AdminPortal: React.FC<AdminPortalProps> = ({
                       type="submit"
                       className="bg-stone-800 hover:bg-stone-700 text-stone-200 border border-stone-700 text-[10px] font-bold py-1 px-2 rounded-sm transition-colors uppercase cursor-pointer"
                     >
-                      Convey Record &rarr;
+                      Convey Record
                     </button>
                   </div>
                 </div>
@@ -575,6 +583,52 @@ export const AdminPortal: React.FC<AdminPortalProps> = ({
                     </div>
                     <span className="text-[8px] text-stone-500 font-bold block uppercase">
                       Allows admins to stress-test the visual matrix grids and trigger experimental warning protocols.
+                    </span>
+                  </div>
+
+                  {/* Divider */}
+                  <div className="h-[1px] bg-stone-800" />
+
+                  {/* Manual Scream & Lamentation Core */}
+                  <div className="space-y-2">
+                    <span className="text-[10px] text-stone-300 font-bold uppercase tracking-wider block">
+                      📢 SOUL WEAKNESS & LAMENTATION SYNTHESIZER CORE
+                    </span>
+                    <div className="flex flex-wrap gap-2">
+                      <button
+                        type="button"
+                        onClick={() => {
+                          LEAAudio.playFaintScream();
+                          const laments = [
+                            "Soul #1844 crying: 'I only wanted to buy some gacha microtransactions!'",
+                            "Subject in Sector IX sobbing: 'I traded 12 years for a gym membership I never used!'",
+                            "Soul #9331 screaming: 'I traded my retirement for a virtual space yacht!'",
+                            "Mortal #2241 weeping: 'My life is short, and I spent it looking at a loading spinner!'",
+                            "Soul #8812 howling: 'I surrendered 8 summers just to clear my credit card debt!'",
+                            "Sector IV wail: 'They took my years, but didn't even upgrade my broadband speed!'",
+                            "Mortal #4110 weeping: 'Traded my precious 20s just to pay off high interest student loans!'",
+                            "Soul #7011 sobbing: 'Sacrificed 5 full years to buy virtual skins for my in-game avatar!'"
+                          ];
+                          const chosen = laments[Math.floor(Math.random() * laments.length)];
+                          setLogs((prev) => [`[${new Date().toLocaleTimeString()}] 📢 MASS LAMENTATION: ${chosen}`, ...prev]);
+                        }}
+                        className="px-3 py-1.5 bg-amber-950/40 text-amber-500 border border-amber-900 font-black text-[10px] rounded hover:bg-amber-900/40 hover:scale-[1.01] transition-all uppercase cursor-pointer"
+                      >
+                        📢 Force Mass Lamentation
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => {
+                          LEAAudio.playFaintScream();
+                          setLogs((prev) => [`[${new Date().toLocaleTimeString()}] 🔊 AUDIO: Individual high-pitched biological wail synthesized.`, ...prev]);
+                        }}
+                        className="px-3 py-1.5 bg-red-950/40 text-red-400 border border-red-900 font-black text-[10px] rounded hover:bg-red-900/40 hover:scale-[1.01] transition-all uppercase cursor-pointer animate-pulse"
+                      >
+                        🔊 Trigger Isolated Soul Scream
+                      </button>
+                    </div>
+                    <span className="text-[8px] text-stone-500 font-bold block uppercase">
+                      Simulates high-fidelity acoustic wailing and outputs registered vocal regrets of the harvested biological stock.
                     </span>
                   </div>
                 </div>
