@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { LEAAudio } from "../utils/audio";
 import { QuestionnaireState } from "../types";
 import { BinderRings, CoffeeStain, GovernmentHeader, RubberStamp } from "./RetroWidgets";
@@ -18,6 +18,92 @@ export const FinalConfirmation: React.FC<FinalConfirmationProps> = ({
 }) => {
   const [agreed, setAgreed] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [hasSigned, setHasSigned] = useState(false);
+  const [isDrawing, setIsDrawing] = useState(false);
+
+  const canvasRef = useRef<HTMLCanvasElement | null>(null);
+
+  // Set up canvas options for marker stroke
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
+    ctx.strokeStyle = "#a3352a"; // Blood red ink marker
+    ctx.lineWidth = 3.5;
+    ctx.lineCap = "round";
+    ctx.lineJoin = "round";
+  }, []);
+
+  const getCoordinates = (e: React.MouseEvent | React.TouchEvent) => {
+    const canvas = canvasRef.current;
+    if (!canvas) return null;
+    const rect = canvas.getBoundingClientRect();
+    
+    const scaleX = canvas.width / rect.width;
+    const scaleY = canvas.height / rect.height;
+
+    let clientX, clientY;
+    if ("touches" in e) {
+      if (e.touches.length === 0) return null;
+      clientX = e.touches[0].clientX;
+      clientY = e.touches[0].clientY;
+    } else {
+      clientX = e.clientX;
+      clientY = e.clientY;
+    }
+
+    return {
+      x: (clientX - rect.left) * scaleX,
+      y: (clientY - rect.top) * scaleY,
+    };
+  };
+
+  const startDrawing = (e: React.MouseEvent<HTMLCanvasElement> | React.TouchEvent<HTMLCanvasElement>) => {
+    const coords = getCoordinates(e);
+    if (!coords) return;
+
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
+
+    ctx.beginPath();
+    ctx.moveTo(coords.x, coords.y);
+    setIsDrawing(true);
+    LEAAudio.playClick();
+  };
+
+  const draw = (e: React.MouseEvent<HTMLCanvasElement> | React.TouchEvent<HTMLCanvasElement>) => {
+    if (!isDrawing) return;
+
+    const coords = getCoordinates(e);
+    if (!coords) return;
+
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
+
+    ctx.lineTo(coords.x, coords.y);
+    ctx.stroke();
+    setHasSigned(true);
+  };
+
+  const stopDrawing = () => {
+    setIsDrawing(false);
+  };
+
+  const clearCanvas = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    setHasSigned(false);
+    LEAAudio.playPaperRustle();
+  };
 
   const totalPayout = calculatedOffer + bonusAmount;
   
@@ -119,16 +205,43 @@ export const FinalConfirmation: React.FC<FinalConfirmationProps> = ({
 
           {/* Graphical Signature fields */}
           <div className="pt-4 grid grid-cols-2 gap-4 border-t border-stone-300">
-            <div>
-              <div className="h-8 flex items-end justify-center font-serif text-sm italic text-[#8b3a2b] font-bold">
-                {state.paymentName || "Grantor Signature"}
+            <div className="flex flex-col space-y-1.5">
+              <div className="relative">
+                <canvas
+                  ref={canvasRef}
+                  width={240}
+                  height={90}
+                  onMouseDown={startDrawing}
+                  onMouseMove={draw}
+                  onMouseUp={stopDrawing}
+                  onMouseLeave={stopDrawing}
+                  onTouchStart={startDrawing}
+                  onTouchMove={draw}
+                  onTouchEnd={stopDrawing}
+                  className="w-full h-20 bg-[#fbf9f3] border-2 border-dashed border-stone-400 rounded-sm cursor-crosshair shadow-inner block"
+                  style={{ touchAction: "none" }}
+                />
+                {!hasSigned && (
+                  <div className="absolute inset-0 flex items-center justify-center pointer-events-none text-stone-400 font-serif italic text-xs select-none">
+                    Sign with marker here
+                  </div>
+                )}
+                {hasSigned && (
+                  <button
+                    type="button"
+                    onClick={clearCanvas}
+                    className="absolute bottom-1 right-1 px-1.5 py-0.5 text-[8px] font-mono font-bold bg-[#8b3a2b]/15 text-[#8b3a2b] rounded border border-[#8b3a2b]/30 hover:bg-[#8b3a2b]/25 select-none"
+                  >
+                    [CLEAR]
+                  </button>
+                )}
               </div>
               <div className="border-t border-stone-800 text-center font-mono text-[9px] text-stone-500 uppercase font-bold pt-1">
-                Signature of the Grantor
+                Digital Marker Signature of Grantor
               </div>
             </div>
-            <div>
-              <div className="h-8 flex items-end justify-center font-mono text-[10px] text-stone-600 font-bold">
+            <div className="flex flex-col justify-end pb-1.5">
+              <div className="h-12 flex items-end justify-center font-mono text-[10px] text-stone-600 font-bold">
                 Commissioner S. Avesta-IV
               </div>
               <div className="border-t border-stone-800 text-center font-mono text-[9px] text-stone-500 uppercase font-bold pt-1">
@@ -159,14 +272,14 @@ export const FinalConfirmation: React.FC<FinalConfirmationProps> = ({
         <div className="pt-2 flex flex-col items-center justify-center space-y-2">
           <button
             onClick={handleSubmit}
-            disabled={!agreed || isSubmitting}
+            disabled={!agreed || !hasSigned || isSubmitting}
             className={`w-full max-w-sm px-6 py-5 border-4 border-double font-stamp text-lg md:text-xl tracking-widest uppercase transition-all ${
-              agreed && !isSubmitting
+              agreed && hasSigned && !isSubmitting
                 ? "bg-[#8b3a2b]/5 border-[#8b3a2b] text-[#8b3a2b] hover:bg-[#8b3a2b]/20 hover:scale-[1.02] shadow-lg cursor-pointer animate-flicker"
                 : "bg-stone-300 border-stone-400 text-stone-500 cursor-not-allowed opacity-50"
             }`}
           >
-            {isSubmitting ? "HARVESTING SOUL ASSETS..." : "SELL MY LIFESPAN"}
+            {isSubmitting ? "HARVESTING SOUL ASSETS..." : !hasSigned ? "AWAITING SIGNATURE..." : "SELL MY LIFESPAN"}
           </button>
           <span className="font-mono text-[9px] text-stone-500 uppercase tracking-widest">
             * LEA DIRECTIVE 1349 // DO NOT PRESS UNLESS WILLING

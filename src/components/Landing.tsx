@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { LEAAudio } from "../utils/audio";
 import { WaxSeal, CoffeeStain, RubberStamp } from "./RetroWidgets";
 
@@ -7,8 +7,13 @@ interface LandingProps {
 }
 
 export const Landing: React.FC<LandingProps> = ({ onStart }) => {
-  const [crtActive, setCrtActive] = useState(false);
+  const [crtActive, setCrtActive] = useState(true);
   const [isPressed, setIsPressed] = useState(false);
+
+  useEffect(() => {
+    // Start CRT hum on default
+    LEAAudio.startCrtHum();
+  }, []);
 
   const handleCrtToggle = () => {
     LEAAudio.playClick();

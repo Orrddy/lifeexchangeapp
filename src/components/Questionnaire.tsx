@@ -17,12 +17,26 @@ export const Questionnaire: React.FC<QuestionnaireProps> = ({ state, onChange, o
 
   const totalSteps = QUIZ_QUESTIONS.length + 1; // Step 0 + questions
 
+  const isCurrentStepCompleted = (() => {
+    if (currentStep === 0) {
+      return state.occupation !== "";
+    } else {
+      const qIndex = currentStep - 1;
+      const q = QUIZ_QUESTIONS[qIndex];
+      return (state[q.id] as string) !== "";
+    }
+  })();
+
   const handleOptionSelect = (key: keyof QuestionnaireState, value: string) => {
     LEAAudio.playClick();
     onChange({ [key]: value });
   };
 
   const handleNext = () => {
+    if (!isCurrentStepCompleted) {
+      LEAAudio.playBuzz();
+      return;
+    }
     if (currentStep < totalSteps - 1) {
       LEAAudio.playPaperRustle();
       setCurrentStep(currentStep + 1);
@@ -225,7 +239,12 @@ export const Questionnaire: React.FC<QuestionnaireProps> = ({ state, onChange, o
             PAGE {currentStep + 1} OF {totalSteps}
           </div>
 
-          <div className="flex gap-2">
+          <div className="flex items-center gap-3">
+            {!isCurrentStepCompleted && (
+              <span className="font-mono text-[9px] text-[#a3352a] font-bold tracking-tight animate-pulse mr-1">
+                ☒ ANSWER REQUIRED
+              </span>
+            )}
             {currentStep > 0 && (
               <button
                 onClick={handlePrev}
@@ -237,7 +256,12 @@ export const Questionnaire: React.FC<QuestionnaireProps> = ({ state, onChange, o
 
             <button
               onClick={handleNext}
-              className="px-5 py-2 text-xs font-black btn-vintage border border-stone-800 rounded-sm text-stone-900 bg-stone-200"
+              disabled={!isCurrentStepCompleted}
+              className={`px-5 py-2 text-xs font-black border border-stone-800 rounded-sm transition-all ${
+                isCurrentStepCompleted
+                  ? "btn-vintage text-stone-900 bg-stone-200 cursor-pointer"
+                  : "bg-stone-300 border-stone-400 text-stone-500 cursor-not-allowed opacity-65"
+              }`}
             >
               {currentStep === totalSteps - 1 ? "VALUATE MORTALITY &rarr;" : "NEXT &rarr;"}
             </button>

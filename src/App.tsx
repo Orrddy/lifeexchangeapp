@@ -103,7 +103,6 @@ export default function App() {
       {/* Decorative desktop shadows or files in the margin */}
       <div className="absolute top-4 left-4 font-mono text-[9px] text-stone-500 select-none space-y-1">
         <div>GOVERNMENT SECTOR III // SECURE TERMINAL #1349</div>
-        <div className="text-[#a3352a] font-bold">SOVEREIGN MORTALITY FORFEITURE REGISTER</div>
       </div>
 
       {/* Lives Taken and Extracted Hours Count-up Widget */}
@@ -128,12 +127,12 @@ export default function App() {
             <span className="w-1.5 h-1.5 rounded-full bg-red-600 animate-ping" />
             <span className="text-stone-300 font-extrabold uppercase tracking-widest">GLOBAL FORFEITURE LEDGER</span>
           </div>
-          <div className="flex flex-row items-center gap-4 font-black text-[10px]">
+          <div className="flex flex-row flex-wrap items-center justify-center gap-x-4 gap-y-1 font-black text-[10px]">
             <div className="flex items-center gap-1.5">
               <span className="text-stone-500 font-bold">LIVES:</span>
               <span className="text-red-500 tracking-wider font-extrabold">{livesCounter.toLocaleString()}</span>
             </div>
-            <div className="w-px h-3 bg-stone-800" />
+            <div className="hidden sm:block w-px h-3 bg-stone-800" />
             <div className="flex items-center gap-1.5">
               <span className="text-stone-500 font-bold">HOURS:</span>
               <span className="text-red-500 animate-pulse tracking-wider font-extrabold">{hoursCounter.toLocaleString()}</span>
